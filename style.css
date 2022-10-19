@@ -1,34 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitter:ital@1&display=swap');
+
+:root{
+    --primary:linear-gradient(315deg, #ab072d, #1619d4);
+    --darkprimary:linear-gradient(315deg, #ab072db5, #1619d4b5);
+    --popular:#ab072d84;
+    --fa-check:#2c9101;
+    --fa-times:#b50303;
+    --platinum:#f3f2f0;
+    --gray:#cfcfcf;
+    --darkgray:#262626e0;
+}
+
 *{
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:'Bitter', serif;
     box-sizing: border-box;
 }
 
 body{
-    background: linear-gradient(to right, #072038, #0e2947);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #111;
 }
 
 .offer {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    margin: .5rem 0 .5rem 0;
 }
 
 .offer .plan{
-    padding: 2.5rem;
-    margin: 15px;
-    border-radius: 10%;
-    background: linear-gradient(to left, #040423, #063c5d);;
-    color: #E5E4E2;
+    position: relative;
+    padding: 2.5rem 1.5rem;
+    margin: 1.3rem 1.1rem;
+    border-radius: 5%;
+    background: var(--primary);
+    color: var(--gray);
     text-align: center;
-    overflow: hidden; 
-    border: 2px solid #2c9101;
+    overflow: hidden; /* Remove protruding part of popular background */
+    box-shadow: 0 0 15px var(--darkgray);
+    transition: .7s ease-in-out;
+    cursor:pointer;
+}
+
+.offer div.plan:hover{
+    background: var(--darkprimary);
+    color: var(--platinum);
+    transform: translateY(-1.3rem);
 }
 
 .plan h2{
     font-size: 2.5rem;
-    margin-bottom: 10px;
+    margin-bottom: .7rem;
+    text-transform: uppercase;
 }
 
 .plan .price{
@@ -43,79 +74,188 @@ body{
 
 .plan ul.details li{
     margin: .7rem;
+    font-size: 1.2rem;
 }
 .plan .fa{
-    margin-right: 5px;
+    margin-right: .2rem;
 }
 
 .plan li .fa-check{
-    color: #2c9101;
+    color: var(--fa-check);
 }
 
 .plan li .fa-times{
-    color: #b50303;
-    padding-left: 2px;
+    color: var(--fa-times);
+    padding-left: .2rem;
 }
 
+/* Subscribe link style */
 .plan a {
+    position: relative;
     font-size: 1.1rem;
     display: block;
-    padding: 10px 30px;
+    padding: 0.7rem 1.9rem;
     margin-top: 1.5rem;
-    color: #e5e4e2;
-    background-color: #038707;
-    border-radius: 8px;
+    color: var(--gray);
+    background: var(--primary);
+    box-shadow: 0 5px 10px #000000;
+    border-radius: 5%;
+    transition: .4s ease-in-out;
+    text-transform: uppercase;
+    text-decoration: none;
+    overflow: hidden; /* Remove any protruding animation */
 }
 
-.plan.top {
-    border: 2px solid #aeb402;
+.plan a:hover{
+    filter: brightness(1.2);
+    color: var(--platinum);
 }
 
-.plan.top a{
-    background-color: #aeb402;
+/* Effect of lightening half of the content of the subscribe */
+.plan a.sub::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    bottom: 3px;
+    width: 50%;
+    background: rgba(255, 255, 255, 0.063);
 }
 
+/* Subscribe - setting and using edge animation */
+.plan a.sub span:nth-child(1){
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--darkprimary);
+    animation: animate1 linear 2s infinite;
+}
+
+.plan a.sub span:nth-child(2){
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--darkprimary);
+    animation: animate2 linear 2s infinite;
+    animation-delay: 1s; /* use of delay to synchronize animations */
+}
+
+.plan a.sub span:nth-child(3){
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--darkprimary);
+    animation: animate3 linear 2s infinite;
+}
+
+.plan a.sub span:nth-child(4){
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--darkprimary);
+    animation: animate4 linear 2s infinite;
+}
+
+/* encouraging information - "popular" */
 .popular-choice{
     position: relative;
 }
 
-.plan.top span{
+.plan.top .popular-choice span{
     position: absolute;
-    font-size:1.1rem;
+    font-size:.8rem;
     padding: 3px;
-    background-color: #aeb402;
-    color: #E5E4E2;
+    background-color:var(--popular);
+    color: var(--platinum);
     width: 130px;
-    left: -70px;
+    left: -60px;
     top: -20px;
     transform: rotate(-45deg);
+    text-transform: uppercase;
+}
+
+/* ---> ANIMATION <--- */
+
+/* subscribe edge animation */
+@keyframes animate1
+{
+    0%
+    {
+        transform: translateX(-100%);
+    }
+    100%
+    {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes animate2
+{
+    0%
+    {
+        transform: translateY(-100%);
+    }
+    100%
+    {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes animate3
+{
+    0%
+    {
+        transform: translateX(100%);
+    }
+    100%
+    {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes animate4
+{
+    0%
+    {
+        transform: translateY(100%);
+    }
+    100%
+    {
+        transform: translateY(-100%);
+    }
 }
 
 /* ---> @MEDIA <--- */
 
 /*Laptops, Desktops*/
 @media only screen and (min-width:920px) {
+
     .offer{
-        height: 100vh;
+        flex-direction: row;
     }
-
-    .offer .plan{
-        margin: auto 15px;
-    }
-
 }
 
-/*SCREEN - 4K*/
-@media only screen and (min-width: 1900px){
+/*SCREEN Desktops --> 4K*/
+@media only screen and (min-width: 2220px){
+
     .offer .plan{
-        width: 22%;
+        width: 16vw;
     }
-    .plan ul.details{
-        font-size: 1.7rem;
+
+    .plan ul.details li{
+        font-size: 1.6rem;
     }
 
     .plan a{
-        font-size: 1.7rem;
+        font-size: 1.8rem;
     }
 
     .plan h2{
@@ -126,4 +266,10 @@ body{
         font-size: 2.7rem;
     }
 
+    .plan.top .popular-choice span{
+        width: 200px;
+        left: -80px;
+        top: -10px;
+        font-size:1.3rem;
+    }
 }
